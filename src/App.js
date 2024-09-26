@@ -6,23 +6,26 @@ import { Component } from 'react';
 
 class App extends Component {
 
-  constructor(props) {
-    super(props);
-    this.handlePClick = this.handlePClick.bind(this);
+  // constructor(props) {
+    // super(props);
 
-    // State é um objeto que armazena as informações que o componente manipula
+    // Se caso não quiser usar arrow function, é necessário fazer o bind
+    // this.handlePClick = this.handlePClick.bind(this);
 
-    this.state = {
-
+    
+    // this.state = {
+      
+    state = {
+      // State é um objeto que armazena as informações que o componente manipula
       name: 'Nicholas Ricardo'
     };   
-  }
-
+  
+// }
   // Esta funnção é um método de instância que altera o estado do componente "name"
-  handlePClick() {
+  handlePClick = () => {
     const { name } = this.state;
 
-    if (name === 'Nicholas Ricardo') {
+    if (name === 'Nicholas Ricardo' || name === 'Pode não mano') {
       this.setState({ name: 'Café' });
     }else {
       this.setState({ name: 'Nicholas Ricardo' });
@@ -31,6 +34,19 @@ class App extends Component {
     // const { name } = this.state;
     // console.log(`<p> ${name}`);
   }
+
+  handleAClick = (event) => {
+    event.preventDefault();
+    const { name } = this.state;
+
+    if(name === 'Nicholas Ricardo' || name === 'Café') {
+      this.setState({ name: 'Pode não mano' });
+    }else {
+      this.setState({ name: 'Nicholas Ricardo' });
+    }
+
+  }
+  
 
   render() {
 
@@ -46,12 +62,13 @@ class App extends Component {
             {name}
           </p>
           <a
+            onClick={this.handleAClick}
             className="App-link"
             href="https://reactjs.org"
             target="_blank"
             rel="noopener noreferrer"
             >
-            Learn React
+            Este é o LINK!
           </a>
         </header>
       </div>
