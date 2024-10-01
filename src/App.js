@@ -1,4 +1,3 @@
-import logo from './logo.svg';
 import './App.css';
 import { Component } from 'react';
 
@@ -6,101 +5,80 @@ import { Component } from 'react';
 
 class App extends Component {
 
-  // constructor(props) {
-    // super(props);
+  state = {
+    // State é um objeto que armazena as informações que o componente manipula
 
-    // Se caso não quiser usar arrow function, é necessário fazer o bind
-    // this.handlePClick = this.handlePClick.bind(this);
+    counter: 0,
+    posts: [
+      {
+        id: 1,
+        title: 'O título 1',
+        body: 'O corpo 1'
+      },
+      {
+        id: 2,
+        title: 'O título 2',
+        body: 'O corpo 2'
+      },
+      {
+        id: 3,
+        title: 'O título 3',
+        body: 'O corpo 3'
+      },
 
-    
-    // this.state = {
-      
-    state = {
-      // State é um objeto que armazena as informações que o componente manipula
-      name: 'Nicholas Ricardo'
-    };   
+    ]
+  };
+
+  timeoutUpdate = null;
+
   
-// }
-  // Esta funnção é um método de instância que altera o estado do componente "name"
-  handlePClick = () => {
-    const { name } = this.state;
 
-    if (name === 'Nicholas Ricardo' || name === 'Pode não mano') {
-      this.setState({ name: 'Café' });
-    }else {
-      this.setState({ name: 'Nicholas Ricardo' });
-    }
-
-    // const { name } = this.state;
-    // console.log(`<p> ${name}`);
+  componentDidMount() {
+    this.handleTimeout();
   }
 
-  handleAClick = (event) => {
-    event.preventDefault();
-    const { name } = this.state;
 
-    if(name === 'Nicholas Ricardo' || name === 'Café') {
-      this.setState({ name: 'Pode não mano' });
-    }else {
-      this.setState({ name: 'Nicholas Ricardo' });
-    }
+  componentDidUpdate() {
+    clearTimeout(this.timeoutUpdate)
+    this.handleTimeout();
+  }
+
+
+
+  
+  handleTimeout = () => {
+    const { posts, counter } = this.state;
+    posts[0].title = 'O título mudou';
+
+    this.timeoutUpdate = setTimeout(() => {
+      this.setState({ posts, counter: counter + 1 });
+    }, 1000)
 
   }
-  
+
 
   render() {
 
-    const { name } = this.state;
-
+    const { posts, counter } = this.state;
 
 
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p onClick={this.handlePClick}>
-            {name}
-          </p>
-          <a
-            onClick={this.handleAClick}
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-            >
-            Este é o LINK!
-          </a>
-        </header>
+        <h1>{counter}</h1>
+        {posts.map(post => (
+          <div key={post.id}>
+            <h1>{post.title}</h1>
+            <p>{post.body}</p>
+          </div>
+        ))}
       </div>
     );
+
   }
+
 }
+
 export default App;
 
 
 
-
-// function App() {
-//   return (
-//     // fragment React, não gera nada, apenas finje ser uma div Root
-//     <>
-//       <div className="App">
-//         <header className="App-header">
-//           <img src={logo} className="App-logo" alt="logo" />
-//           <p>
-//             Edit <code>src/App.js</code> and save to reload.
-//           </p>
-//           <a
-//             className="App-link"
-//             href="https://reactjs.org"
-//             target="_blank"
-//             rel="noopener noreferrer"
-//           >
-//             Learn React
-//           </a>
-//         </header>
-//       </div>
-//     </>
-
-//   );
-// }
